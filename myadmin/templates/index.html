@@ -1,0 +1,339 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									<div class="row">
+									<div class="col-sm-6">
+									<div class="widget-box">
+											<div class="widget-header">
+												<h4 class="smaller">
+													修改图片
+												</h4>
+											</div>
+											<div class="widget-body">
+												<div class="widget-main">
+													<form class="form-horizontal" method="post" action="dosystemsettings.php?action=setcustombg" role="form" enctype="multipart/form-data">
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="custombg">背景图：</label>
+														<div class="col-sm-9">
+															<input multiple="" type="file" class="imageuploader" id="custombg" name="custombg"/>
+															<div class="hr hr-12 dotted"></div>
+															<button type="submit" class="btn btn-sm btn-primary">保存</button>
+															<span class="alert-info">大屏幕长宽比一致即可，不要超过500kb</span>
+														</div>
+													</div>
+													</form>
+													<div class="space-4"></div>
+													<form class="form-horizontal" method="post" action="dosystemsettings.php?action=seterweima" role="form" enctype="multipart/form-data">
+													<div class="form-group" >
+														<label class="col-sm-3 control-label no-padding-right" for="logo">活动二维码：</label>
+														<div class="col-sm-9">
+															<input multiple="" type="file" id="erweima" class="imageuploader" name="erweima"/>
+															<div class="hr hr-12 dotted"></div>
+															<button type="submit" class="btn btn-sm btn-primary">保存</button>
+															<span class="alert-info">尺寸400*400像素,如果不使用公众号二维码，可以<a style="font-weight: 800;text-decoration: underline;" href="../wall/defaultqrcode.php" target="_blank">点击此处生成二维码</a>
+															</span>
+														</div>
+													</div>
+													</form>
+												
+												</div>
+												</div>
+											
+									</div>									
+										
+								
+									</div>
+									<div class="col-sm-6">
+									<div class="row">
+									<div class="col-sm-12">
+									<div class="widget-box">
+											<div class="widget-header">
+												<h4 class="smaller">
+													签到信息设置
+												</h4>
+											</div>
+											<div class="widget-body">
+												<div class="widget-main">
+													<div class="row">
+														<div class="col-sm-12">
+														<div class="form-group">
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-1">要求填写姓名</label>
+																<div class="col-sm-9">
+																	<label>
+																		<input name="name_switch" class="ace ace-switch ace-switch-3" type="checkbox" {if $wall_config['name_switch']== 1}checked{/if} />
+														<span class="lbl" onclick="switchname()"></span>
+																	</label>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-1">要求填写手机号</label>
+																<div class="col-sm-9">
+																	<label>
+																		<input name="phone_switch" class="ace ace-switch ace-switch-3" type="checkbox" {if $wall_config['phone_switch']== 1}checked{/if} />
+														<span class="lbl" onclick="switchphone()"></span>
+																	</label>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+									
+								
+									<div class="row">
+									<div class="col-sm-12">
+									<div class="widget-box">
+											<div class="widget-header">
+												<h4 class="smaller">
+													开场密码
+												</h4>
+											</div>
+											<div class="widget-body">
+												<div class="widget-main">
+													<div class="form-group">
+													<div class="input-group">
+																	<span class="input-group-addon">
+																		<i class="ace-icon fa fa-key"></i>
+																	</span>
+
+																	<input type="text" name="screenpaw" class="form-control" placeholder="输入新密码" value="{$wall_config['screenpaw']}"/>
+																	<span class="input-group-btn">
+																		<button type="button" class="btn btn-purple btn-sm btn-password">
+																			修改
+																		</button>
+																	</span>
+																</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+									<div class="row">
+									<div class="col-sm-12">
+									<div class="widget-box">
+											<div class="widget-header">
+												<h4 class="smaller">
+													各页面的入口地址 <a style="float:right;" target="_blank" href="http://pivote.fangying.com/helper/guanliangongzhonghao.html"><i class="ace-icon fa fa-exclamation-triangle smaller-80"></i>点此了解如何关联公众号？</a>
+												</h4>
+											</div>
+											<div class="widget-body">
+												<div class="widget-main">
+													<div class="row">
+														<div class="col-sm-12">
+															<ul class="list-unstyled spaced">
+															<li>大屏幕地址：http://{$domain}/index.php</li>
+															<li>后台管理地址：http://{$domain}/myadmin/index.php</li>
+															<li>
+															
+															<h4>手机端地址：</h4>
+															<div class="well">
+															<ul style="list-style: none;">
+															<li>签到地址：<span class="mobileurl">http://{$domain}/mobile/qiandao.php?vcode={$wall_config['verifycode']}</span></li>
+															<li>上墙地址：<span class="mobileurl">http://{$domain}/mobile/index.php?vcode={$wall_config['verifycode']}</span></li>
+															<li>摇一摇地址：<span class="mobileurl">http://{$domain}/mobile/shake.php?vcode={$wall_config['verifycode']}</span></li>
+															<li>投票地址：<span class="mobileurl">http://{$domain}/mobile/vote.php?vcode={$wall_config['verifycode']}</span></li>
+															<li>红包地址：<span class="mobileurl">http://{$domain}/mobile/redpacket.php?vcode={$wall_config['verifycode']}</span></li>
+															<li>中奖结果地址：<span class="mobileurl">http://{$domain}/mobile/cjresult.php?vcode={$wall_config['verifycode']}</span></li>
+															</ul>
+															</div>
+															</li>
+															<!-- <li><a href="javascript:resetmobileurl();" class="btn btn-xs btn-primary">重置活动连接</a></li>-->
+															
+													</ul>
+													</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+									<div class="row">
+									<div class="col-sm-12">
+									<div class="widget-box">
+											<div class="widget-header">
+												<h4 class="smaller">
+													清空上墙系统数据
+												</h4>
+											</div>
+											<div class="widget-body">
+												<div class="widget-main">
+													<div class="row">
+														<div class="col-sm-12">
+														<p>数据包括所有签到用户信息，发送的上墙消息，抽奖结果，摇一摇数据，投票数据，红包数据等</p>
+															<button class="btn btn-danger col-sm-12" onclick="cleardata();"><i class="ace-icon fa fa-exclamation-triangle bigger-120"></i>点此清空所有上墙数据</button>
+													</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+									</div>
+									
+									</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+{literal}
+function resetmobileurl(){
+	var domain='{/literal}{$domain}{literal}';
+	//http://{$domain}/mobile/qiandao.php?vcode=
+	jQuery.ajax({
+		'url':'doindex.php?action=resetmobileurl',
+		'type':'get',
+		'dataType':'json',
+		'success':function(json){
+			if(json.code>0){
+				var mobileurl_arr=$('.mobileurl');
+				$(mobileurl_arr[0]).text('http://'+domain+'/mobile/qiandao.php?vcode='+json.vcode);
+				$(mobileurl_arr[1]).text('http://'+domain+'/mobile/index.php?vcode='+json.vcode);
+				$(mobileurl_arr[2]).text('http://'+domain+'/mobile/shake.php?vcode='+json.vcode);
+				$(mobileurl_arr[3]).text('http://'+domain+'/mobile/vote.php?vcode='+json.vcode);
+				$(mobileurl_arr[4]).text('http://'+domain+'/mobile/redpacket.php?vcode='+json.vcode);
+				$(mobileurl_arr[5]).text('http://'+domain+'/mobile/cjresult.php?vcode='+json.vcode);
+			}else{
+				alert(json.message);
+			}
+		}
+	})
+}
+
+function cleardata(){
+	if(!confirm('确认要清空所有由粉丝产生的数据吗？')){return false;}
+	jQuery.ajax({
+		'url':'doindex.php?action=cleardata',
+		'type':'post',
+		'dataType':'json',
+		'success':function(json){
+			alert(json.message);
+			return false;
+			
+		}
+	});
+}
+function switchname(){
+	var nameswitch=$('input[name=name_switch]:checked').val();
+	nameswitch=nameswitch==undefined?1:2;
+	jQuery.ajax({
+		'url':'doindex.php?action=switchname',
+		'type':'post',
+		'dataType':'json',
+		'data':{'status':nameswitch},
+		'success':function(json){
+			if(json.code<0)
+				alert(json.message);
+			return false;
+			
+		}
+	});
+}
+function switchphone(){
+	var phoneswitch=$('input[name=phone_switch]:checked').val();
+	phoneswitch=phoneswitch==undefined?1:2;
+	jQuery.ajax({
+		'url':'doindex.php?action=switchphone',
+		'type':'post',
+		'data':{'status':phoneswitch},
+		'dataType':'json',
+		'success':function(json){
+			if(json.code<0)
+				alert(json.message);
+			return false;
+			
+		}
+	});
+}
+jQuery(function($){
+	$('.btn-password').bind('click',function(){
+		var screenpaw=$('input[name=screenpaw]').val();
+		$.ajax({
+			'url':'doindex.php?action=changescreenpaw',
+			'data':{'screenpaw':screenpaw},
+			'type':'post',
+			'dataType':'json',
+			'success':function(json){
+				alert(json.message);
+				return false;
+			}
+		})
+	});
+	$('.imageuploader').ace_file_input({
+		style: 'well',
+		btn_choose: '点击此处选择图片',
+		btn_change: null,
+		no_icon: 'ace-icon fa fa-cloud-upload',
+		droppable: true,
+		maxSize: 550000,
+		allowExt: ["jpeg", "jpg", "png", "gif"],
+		allowMime: ["image/jpg", "image/jpeg", "image/png", "image/gif"],
+		thumbnail: 'large',//large | fit
+		previewHeight:200,
+		preview_error : function(filename, error_code) {
+		}
+
+	}).on('change', function(){
+	});
+	
+	{/literal}
+	{if $wall_config['bgimg']!=''}
+	{literal}
+	$('#custombg')
+	.ace_file_input('show_file_list', [
+		{type: 'image', name: '背景图', path: '{/literal}{$wall_config['bgimg']}{literal}'},
+	]);
+	{/literal}
+	{/if}
+	
+		{if $weixin_config['erweima']!=''}
+		{literal}
+		$('#erweima')
+		.ace_file_input('show_file_list', [
+			{type: 'image', name: '活动二维码', path: '{/literal}{$weixin_config['erweima']}{literal}'},
+		]);
+		{/literal}
+		{/if}
+		{literal}
+});
+
+
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

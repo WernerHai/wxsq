@@ -1,0 +1,314 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>设置系统背景图，logo等</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-6">
+								<!-- PAGE CONTENT BEGINS -->
+									<!-- #section:elements.form -->
+									<div class="space-4"></div>
+									<form class="form-horizontal" method="post" action="dosystemsettings.php?action=setlogo" role="form" enctype="multipart/form-data">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="logo">页面顶部Logo：</label>
+										<div class="col-sm-9">
+											<input multiple="" type="file" id="logo" class="imageuploader" name="logo"/>
+											<div class="hr hr-12 dotted"></div>
+											<button type="submit" class="btn btn-sm btn-primary">保存</button><span class="alert-info">尺寸280*75像素</span>
+										</div>
+									</div>
+									</form>
+									
+									<div class="space-4"></div>
+									<form class="form-horizontal" method="post" action="dosystemsettings.php?action=setbottomlogo" role="form" enctype="multipart/form-data">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="bottomlogo">页面底部Logo：</label>
+										<div class="col-sm-9">
+											<input multiple="" type="file" id="bottomlogo" class="imageuploader" name="bottomlogo"/>
+											<div class="hr hr-12 dotted"></div>
+											<button type="submit" class="btn btn-sm btn-primary">保存</button><span class="alert-info">尺寸165*50像素</span>
+										</div>
+									</div>
+									</form>
+									
+									
+									
+								<!-- PAGE CONTENT ENDS -->
+							</div>
+							<div  class="col-xs-6">
+							<div class="widget-box">
+											<div class="widget-header">
+												<h4 class="smaller">
+													大屏幕基本设置
+												</h4>
+											</div>
+											<div class="widget-body">
+												<div class="widget-main">
+													<div class="row">
+														<div class="col-sm-12">
+														<div class="form-group">
+													<div class="input-group">
+																	<span class="input-group-addon">
+																		欢迎语1
+																	</span>
+
+																	<input type="text" name="welcometext1" class="form-control" placeholder="输入欢迎文字" value="{$wall_config['welcometext1']}"/>
+																	<span class="input-group-btn">
+																		<button type="button" class="btn btn-purple btn-sm btn-welcometext1">
+																			修改
+																		</button>
+																	</span>
+																	
+																</div>
+																<p class="help-block">大屏幕左上角logo右侧文字</p>
+
+													</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-12">
+														<div class="form-group">
+													<div class="input-group">
+																	<span class="input-group-addon">
+																		欢迎语2
+																	</span>
+
+																	<input type="text" name="welcometext2" class="form-control" placeholder="输入欢迎文字" value="{$wall_config['welcometext2']}"/>
+																	<span class="input-group-btn">
+																		<button type="button" class="btn btn-purple btn-sm btn-welcometext2">
+																			修改
+																		</button>
+																	</span>
+																</div>
+																<p class="help-block">大屏幕左下角logo右侧文字</p>
+													</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-12">
+														<div class="form-group">
+													<div class="input-group">
+																	<span class="input-group-addon">
+																		大二维码顶部文字
+																	</span>
+
+																	<input type="text" name="qrcodetoptext" class="form-control" placeholder="大二维码顶部文字" value="{$wall_config['qrcodetoptext']}"/>
+																	<span class="input-group-btn">
+																		<button type="button" class="btn btn-purple btn-sm btn-qrcodetoptext">
+																			修改
+																		</button>
+																	</span>
+																</div>
+																<p class="help-block">右上角二维码点击2次最大后顶上显示的文字</p>
+													</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+										<div class="widget-box">
+											<div class="widget-header">
+												<h4 class="smaller">
+													版权信息
+												</h4>
+											</div>
+											<div class="widget-body">
+												<div class="widget-main">
+													<div class="form-group">
+													<div class="input-group">
+																	<span class="input-group-addon">
+																		文字
+																	</span>
+
+																	<input type="text" name="copyright" class="form-control" placeholder="输入版权文字" value="{$wall_config['copyright']}"/>
+																	<span class="input-group-btn">
+																		<button type="button" class="btn btn-purple btn-sm btn-copyright">
+																			修改
+																		</button>
+																	</span>
+																</div>
+
+													</div>
+													<div class="form-group">
+													<div class="input-group">
+																	<span class="input-group-addon">
+																		链接
+																	</span>
+																	<input type="text" name="copyrightlink" class="form-control" placeholder="输入版权链接" value="{$wall_config['copyrightlink']}"/>
+																	<span class="input-group-btn">
+																		<button type="button" class="btn btn-purple btn-sm btn-copyrightlink">
+																			修改
+																		</button>
+																	</span>
+																</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+							</div>
+							<!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+{literal}
+jQuery(function($){
+	
+	$('.btn-copyright').bind('click',function(){
+		var val=$('input[name=copyright]').val();
+		$.ajax({
+			'url':'doindex.php?action=copyright',
+			'data':{'copyright':val},
+			'type':'post',
+			'dataType':'json',
+			'success':function(json){
+				alert(json.message);
+				return false;
+			}
+		})
+	});
+	$('.btn-copyrightlink').bind('click',function(){
+		var val=$('input[name=copyrightlink]').val();
+		$.ajax({
+			'url':'doindex.php?action=copyrightlink',
+			'data':{'copyrightlink':val},
+			'type':'post',
+			'dataType':'json',
+			'success':function(json){
+				alert(json.message);
+				return false;
+			}
+		})
+	});
+	
+	$('.btn-welcometext1').bind('click',function(){
+		var text=$('input[name=welcometext1]').val();
+		$.ajax({
+			'url':'dosystemsettings.php?action=setwelcometext1',
+			'type':'post',
+			'dataType':'json',
+			'data':{'welcometext1':text},
+			'success':function(json){
+				alert(json.message);
+				return false;
+			}
+		});
+	});
+	
+	$('.btn-welcometext2').bind('click',function(){
+		var text=$('input[name=welcometext2]').val();
+		$.ajax({
+			'url':'dosystemsettings.php?action=setwelcometext2',
+			'type':'post',
+			'dataType':'json',
+			'data':{'welcometext2':text},
+			'success':function(json){
+				alert(json.message);
+				return false;
+			}
+		});
+	});
+	$('.btn-qrcodetoptext').bind('click',function(){
+		var text=$('input[name=qrcodetoptext]').val();
+		$.ajax({
+			'url':'dosystemsettings.php?action=qrcodetoptext',
+			'type':'post',
+			'dataType':'json',
+			'data':{'qrcodetoptext':text},
+			'success':function(json){
+				alert(json.message);
+				return false;
+			}
+		});
+	});
+	$('.imageuploader').ace_file_input({
+		style: 'well',
+		btn_choose: '点击此处选择图片',
+		btn_change: null,
+		no_icon: 'ace-icon fa fa-cloud-upload',
+		droppable: true,
+		maxSize: 550000,
+		//previewHeight:200,
+		allowExt: ["jpeg", "jpg", "png", "gif"],
+		allowMime: ["image/jpg", "image/jpeg", "image/png", "image/gif"],
+		thumbnail: 'large'//large | fit
+		//,icon_remove:null//set null, to hide remove/reset button
+		/**,before_change:function(files, dropped) {
+			//Check an example below
+			//or examples/file-upload.html
+			return true;
+		}*/
+		/**,before_remove : function() {
+			return true;
+		}*/
+		,
+		//previewSize:400,
+		previewHeight:200,
+		preview_error : function(filename, error_code) {
+			//name of the file that failed
+			//error_code values
+			//1 = 'FILE_LOAD_FAILED',
+			//2 = 'IMAGE_LOAD_FAILED',
+			//3 = 'THUMBNAIL_FAILED'
+			//alert(error_code);
+		}
+
+	}).on('change', function(){
+	});
+	
+
+	{/literal}
+	{if $wall_config['logoimg']!=''}
+	{literal}
+	$('#logo')
+	.ace_file_input('show_file_list', [
+		{type: 'image', name: 'logo', path: '{/literal}{$wall_config['logoimg']}{literal}'},
+	]);
+	{/literal}
+	{/if}
+	{if $wall_config['bottom_logoimg']!=''}
+		{literal}
+		$('#bottomlogo')
+		.ace_file_input('show_file_list', [
+			{type: 'image', name: 'bottomlogo', path: '{/literal}{$wall_config['bottom_logoimg']}{literal}'},
+		]);
+		{/literal}
+	{/if}
+			
+	
+	{literal}
+})
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

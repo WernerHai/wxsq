@@ -1,0 +1,593 @@
+    <link rel="stylesheet" href="themes/meepo/assets/css/3d.css">
+    <link rel="stylesheet" href="themes/meepo/assets/css/style.css?v=32323232" media="screen" type="text/css">
+    <link rel="stylesheet" href="themes/meepo/assets/css/normalize.css">
+    
+    <script src="themes/meepo/assets/js/lotter_free_base.js" type="text/javascript"></script>
+    <script src="themes/meepo/assets/js/jquery.easing.min.js" type="text/javascript"></script>
+    <style type="text/css">
+        .hidden{
+            display: none;
+        }
+        .pre{
+            width: 45px;height: 45px;float: left;margin-top: 35%;display: none;
+        }
+        .notpre{
+            width: 45px;height: 45px;float: left;margin-top: 35%;
+        }
+        .next{
+            width: 45px;height: 45px;float: right;margin-top: 35%;
+        }
+        .notnext{
+            width: 45px;height: 45px;float: right;margin-top: 35%;display: none;
+        }
+        .imgshow{
+            width: 220px;
+            height: 220px;
+            margin-top: 30px;
+        }
+
+    </style>
+</head>
+
+<body thistype="sign_wall" >
+    <div class="container" style="position: absolute;    z-index: 99999999999999999;">
+        <div class="container1" style="padding-top: 15px;">
+               {include file="themes/meepo/top_panel.html"}
+        </div>
+
+     <div style="position: absolute;width: 100%;z-index: 1;">
+         <div style="width: 1024px;position: relative;margin-left: auto;margin-right: auto;">
+            <button id="close-draw" class="kpstartbtn luck-wait lotter-wait" style="display: none;margin-left: 116px;margin-top: 474px;">停止</button>
+         </div>
+     </div>
+
+        <div id="wallCont" class="mainwidth" data-modle="wall-modle-cont" style="position: absolute;">
+         <div id="gift-wall-block" class="wall-box none msg-opacity8" style="color: rgb(255, 255, 255); display: block;">
+            <div class="luck-draw">
+                <div class="custom-bg"></div>
+                <div class="luck-presz">
+                <ul id="awardCategoryBox">
+                <li>
+                <img id="awardimage" src="themes/meepo/assets/images/defaultaward.jpg" placeholder="themes/meepo/assets/images/defaultaward.jpg" style="width:251px;height:251px;"/>
+                </li>
+                <li>选择奖品：
+                <select name="awardid" style="color:black;">
+                <option value="-1" data-image="themes/meepo/assets/images/defaultaward.jpg">--请选择奖项--</option>
+                {foreach $awardlist as $item}
+				<option value="{$item['id']}" data-image="{$item['imagepath']}">{$item['awardname']}</option>
+				{/foreach}
+                </select>
+                </li>
+                </ul>
+
+                    <div class="drawbox">
+                        <div class="draw-contrbox">
+                            <button id="start-draw" class="kpstartbtn luck-wait lotter-wait">开始</button>
+                            <!-- <button id="close-draw" class="kpstartbtn luck-wait lotter-wait" style="display: none">停止</button> -->
+                            <p class="latter-totalnum stellblue-text deep-orange" style="margin-top: 15px;"><span class="lotteryUserNum">0</span>人参与
+                                 <span style="margin-left: 50px;font-size: 16px;">一次抽取</span>
+                                    <select name="" id="lotteryNumSel" style="color: #060606;">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+										<option value="12">12</option>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="30">30</option>
+										<option value="40">40</option>
+										<option value="50">50</option>
+										<option value="60">60</option>
+										<option value="70">70</option>
+										<option value="80">80</option>
+										<option value="90">90</option>
+										<option value="100">100</option>
+                                    </select>
+                                    <span style="font-size: 16px;">人</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lottery-poper"><a id="trashlottery" class="tooltip tooltipstered"><i class="fa fa-trash fa-fw fa-2x"></i></a>
+                    <p class="lottery-list deep-orange" style="margin-bottom: 15px;"><!-- <span style="float: left;font-size: 18px;">普通模式</span> -->获奖人数(<b class="winUserNum">0</b>人)<span class="reset" style="float: right;font-size: 24px;">重置</span></p>
+                    <div class="lottery-box">
+                    
+
+
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <div id="container" style="display:none;"></div>
+    <canvas class="canvas" height="700"></canvas>
+
+    <div class="mark-ewm"></div>
+    <input type="hidden" id="max_id" name="max_id" value="206486">
+    <script type="text/javascript">
+    {literal}
+    var jiangpin_json={/literal}{$awardlistjson}{literal};
+    $('#screen_ecode').on('click', function() {
+        $('#url_code2').toggleClass('hover').css('top', 50);
+    });
+    $('#url_code2').on('click', function() {
+        $('#url_code2').removeClass('hover');
+    });
+    $('#url_code').on('click', function() {
+        $(".mark-ewm").hide();
+        $('#url_code').removeClass('hover');
+    });
+    function startanimate(){
+     	init();
+ 		resetanimate();
+ 		animate();
+    }
+	function initdata(awardid,func){
+		$.ajax({
+			"url":"ajax_act_lottory.php?action=ready&awardid="+awardid+"&from=threedimensionallottery",
+			"type":"get",
+			"dataType":"json",
+			"success":function(json){
+				if(json.ret>=0){
+					$('.lotteryUserNum').text(json.count);
+					personArray=[];
+					for(var i=0,l=json.data.length;i<l;i++){
+						personArray.push({"id":json.data[i].id,
+							"image":json.data[i].avatar,
+							"name":json.data[i].nick_name,
+							"thumb_image":json.data[i].avatar,
+							"openid":json.data[i].openid
+							})
+					}
+					$(".lottery-box").html('');
+					if(json.luckuser!=null){
+						for(var i=json.luckuser.length-1,l=0;i>=l;i--){
+							getAwardsList(json.luckuser[i].avatar,json.luckuser[i].nick_name);
+						}
+						$('.winUserNum').html(json.luckuser.length);
+					}else{
+						$('.winUserNum').html(0);
+					}
+					
+					window.table=inittable();				
+				}else{
+					alert(json.message);
+				}
+			}
+		});
+	}
+	function changeawardid(){
+		var awardid=$('select[name=awardid]').val();
+		var imgel=$('#awardimage');
+		if(awardid==-1){
+			imgel.attr('src',imgel.attr('placeholder'));
+			return;
+		}
+		var imgsrc=jiangpin_json[awardid]['awardimagepath']==null?imgel.attr('placeholder'):jiangpin_json[awardid]['awardimagepath'];
+		imgel.attr('src',imgsrc);
+		
+		initdata(awardid);
+	}
+	jQuery(function($){
+		$('select[name=awardid]').change(changeawardid);
+	});
+	
+    var is_show_info = 1;
+    var hFont;
+    (function(doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function() {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                hFont = 20 * (clientWidth / 320);
+                docEl.style.fontSize = hFont + 'px';
+            };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+    {/literal}
+    </script>
+    <script src="themes/meepo/assets/js/2d_lottery.js?v=3123"></script>
+    <script type="text/javascript">
+    {literal}
+    var personArray = new Array;
+    QD.Dc.init('.canvas');
+	var table=inittable();
+	function inittable(){
+		//var placeholder_image_cnt = 0;
+	    //var placeholder_image_index = 0;
+	    //var default_placeholder_image = "themes/meepo/assets/images/noavatar.jpg";
+	    //var edit_personArray = new Array;
+	    //var placeholder_image = default_placeholder_image;
+	    var table = new Array;
+	    var personArrayLength=personArray.length;
+	    if(personArrayLength<=0){
+	    	return;
+	    }
+	    for (var i = 0; i < 126; i++) {
+	        table[i] = new Object();
+	        /*if (i < personArray.length) {
+	            table[i] = personArray[i];
+	            table[i].src = personArray[i].thumb_image;
+	        } else {
+	            if (placeholder_image_cnt > 0) {
+	                if (placeholder_image_index >= placeholder_image_cnt) {
+	                    placeholder_image_index = 0;
+	                }
+
+	                placeholder_image = placeholder_image_arr[placeholder_image_index];
+	                placeholder_image_index++;
+	            }
+	            table[i].src = placeholder_image;
+	        }*/
+	        
+	        table[i]=personArray[i%personArrayLength];
+	        table[i].src = personArray[i%personArrayLength].thumb_image;
+	        
+	        table[i].p_x = i % 20 + 1;
+	        table[i].p_y = Math.floor(i / 20) + 1;
+	    }
+	    //打乱数组顺序
+	    table = table.sort(function() {
+	        return Math.random()
+	    });
+	    return table;
+	}
+
+    var signwall_show_str = "#torus";
+
+    var show_interval = "0"; 
+/*
+    var return_array = new Array();
+
+    function getArrayItems(arr, num) {
+        var temp_array = new Array();
+        for (var index in arr) {
+            temp_array.push(arr[index]);
+        }
+
+        for (var i = 0; i < num; i++) {
+            if (temp_array.length > 0) {
+                var arrIndex = Math.floor(Math.random() * temp_array.length);
+                return_array[i] = temp_array[arrIndex];
+                temp_array.splice(arrIndex, 1);
+            } else {
+                return false;
+            }
+        }
+        return return_array;
+    }*/
+    //getArrayItems(personArray, 50);
+
+    window.onload = function() {
+        QD.init();
+    }
+
+    function opening(){
+        transform( targets.grid, 50, 'grid', 20000);
+        $('#container').show();
+    }
+
+    function closeing(){
+        TWEEN.removeAll();
+        $("div").remove(".element");
+        $('#container').hide();
+    }
+
+/*
+	var newPic = new Array(),signNo = 0,name,qdword;
+	setInterval(function() {
+        if (newPic.length > 0) {
+            var firstInfo = newPic.shift();
+            var showImg = firstInfo.image;
+            name = firstInfo.name;
+            qdword = firstInfo.qdword;
+            personArray.push(firstInfo);
+            $('.element').eq(personArray.length - 1).find('img').attr('src', showImg);
+        } 
+        //getArrayItems(personArray, 50);
+    }, 8000);*/
+    {/literal}
+    </script>
+    <script src="themes/meepo/assets/js/three.min.js"></script>
+    <script src="themes/meepo/assets/js/tween.min.js"></script>
+    <script src="themes/meepo/assets/js/CSS3DRenderer.js"></script>
+    <script src="themes/meepo/assets/js/3d_lottery.js?v=3123212"></script>
+    
+    <script type="text/javascript">
+    {literal}
+    var stop = false
+    var fansNewData = new Array();
+    var nextFansNewData = new Array();
+    var prevFansNewData = new Array();
+    var award_user = new Array();
+    var showPI = 0;
+    var startGame = false;
+    var overGame = false;
+    var award_id = '';
+
+    showPrizeIn = function(savatar,sname){
+        $(".mark-ewm").show();
+        s = $(".drawbox"),
+        l = ($(window).width() - 298)/2;
+        c = ($(window).height() - 298)/2 + $(document).scrollTop();
+        html = '';
+        html = '<div class="prizeIn" ><img class="tou" src="'+savatar+'"><p>'+sname+'</p>';
+        html += '<img class="honor" src="themes/meepo/assets/images/ribbon.png""><div class="rays"></div></div>'; 
+        $("body").append(html);
+
+        $(".prizeIn").animate({left: l+"px", top: c+"px", width: "298px", height: "298px"},{ easing: "easeInExpo", duration: 500, complete: function() { 
+                $(".prizeIn .rays,.prizeIn .honor,.prizeIn .crown,.prizeIn p").css("display", "block") 
+            setTimeout(function() { 
+                 $(".prizeIn .rays,.prizeIn .honor,.prizeIn p,.prizeIn crown").css("display", "none");
+                        var s = $(".lottery-avatar").first().width();
+                        var p = $(window).width();
+                        s || (s = 216);
+                        var l, c, u = s + "px",
+                            h = ($(".lottery-crown img").first().width() + "px", $(".lottery-crown img").first().height() + "px", $(".lottery-limt").first()); "undefined" != typeof h && 0 != h.length ? (l = h.offset().left + "px", c = h.offset().top + "px") : (l = p / 2 - 60 + "px", c = "160px"), $(".prizeIn").animate({ left: l, top: c, width: u, height: u }, { easing: "easeInExpo", duration: 500, complete: function() { 
+                                $(".prizeIn").fadeOut(500),$(".mark-ewm").hide(),$(".prizeIn").remove(),getAwardsList(savatar,sname) } }) }, 1e3) 
+            }  
+        })
+    }
+
+
+    function getAwardsList(lavatar,lname) {
+            var i1 = "";
+            i1 += '<div class="lottery-limt lottery-smallimg">'; 
+            i1 += '<div class="box">';
+            i1 += '<div class="lottery-remove"><i class="fa fa-times"></i></div>';
+            i1 += '<img class="lottery-avatar" src="'+lavatar+'">';
+            i1 += '<img style="display:none;" class="lottery-avatar" src="">';
+            i1 += "</div>";
+            i1 += '<div class="nickname"><span>'+lname+'</span></div>';
+            i1 += '</div>';
+            $(".lottery-box").prepend(i1);
+    }
+
+    $("#start-draw").on('click', function() { 
+        gameStart();
+    });
+	
+    function gameStart() {
+    	var _award_id = $("select[name=awardid]").val();
+    	initdata(_award_id);
+    	startanimate();
+    	if(_award_id==0){
+        	alert('请先选择一个奖品');
+        	return false;
+    	}
+        
+        if (fansNewData.length>0) {
+            fansNewData.length = 0;
+        }
+        if(startGame){
+            return;
+        }
+        startGame =true;
+        
+        var lUserNum = parseInt($('.lotteryUserNum').text());
+        var winUserNum = parseInt($('.winUserNum').text());
+        var lotteryNumSel = parseInt($("#lotteryNumSel").val());
+        //console.log(lotteryNumSel);
+        if(winUserNum >= lUserNum){
+            alert("已经没有可抽奖的人了!！");
+            startGame = false;
+            return
+        }
+        award_id = _award_id;
+        if(lotteryNumSel > (lUserNum - winUserNum)){
+            alert("您选择的人数超过可以抽奖的人数！");
+            startGame = false;
+            return
+        }
+        $("#wallCont").hide();
+        $("#start-draw").hide();
+
+        opening();
+        var tt = 0;
+        showtx = setInterval(function() {
+            $('.element').eq(12).find('img').attr('src', personArray[tt].thumb_image);
+            $('.element').eq(37).find('img').attr('src', personArray[tt].thumb_image);
+            $('.element').eq(62).find('img').attr('src', personArray[tt].thumb_image);
+            $('.element').eq(87).find('img').attr('src', personArray[tt].thumb_image);
+            $('.element').eq(112).find('img').attr('src', personArray[tt].thumb_image);
+            tt++;
+            if(tt>personArray.length-1){
+                tt = 0;
+            }
+                
+        }, 50);
+        var winUserNum = $(".winUserNum").text();
+            setTimeout(function() {
+                $('#close-draw').show();
+            }, 2000);
+            
+            
+            fansData = personArray.slice(0,lotteryNumSel);
+            award_user = fansData;//data.data;
+            fansNum = lotteryNumSel;
+            $.each(fansData, function(i, v) {
+                fansNewData.push(new Array(v['id'], v['image'], v['name']));
+            });
+    };
+
+
+    $('#close-draw').on('click', function() {
+        notice_awarduser();
+    });
+    
+    
+    function notice_awarduser(){
+    	//奖品编号
+        var _award_id = $('select[name=awardid]').val();
+        //中奖人数
+        var personnum=$('#lotteryNumSel').val();
+        
+        function getluckperson(){
+        	$.ajax({
+                url: "ajax_act_lottory.php?action=ok",
+                "type":"post",
+                dataType: "json",
+                data: {
+                	awardid:_award_id,
+                    from:"threedimensionallottery"
+                },
+                beforeSend: function () {
+
+                },
+                success: function (data) {
+                    if(data.ret > 0){
+                    	var lotteryUserNum=$('.lotteryUserNum').text();
+                    	$('.lotteryUserNum').text(lotteryUserNum-1);
+                    	var fansNum=parseInt( $(".winUserNum").text());
+                    	$(".winUserNum").html(fansNum+1);
+                    	if(!overGame){
+                    		clearInterval(showtx);
+                            overGame =true;
+                            
+                            $("#start-draw").show();
+                           	$('#close-draw').hide();
+                           	closeing(); 
+                        	setTimeout(function(){
+                            	$("#wallCont").show();
+                        	}, 1000);
+                    	}
+                    	showPrizeIn(data.data.avatar,data.data.nick_name);
+                    	personnum--;
+                        if(personnum>0){
+                        	setTimeout(function(){getluckperson();},3000);
+                        }else{
+                        	overGame =false;
+                            startGame = false;
+                            tt = 0;
+                        }
+                    }else{
+    					alert(data.message);
+    					window.location.reload();
+                    }
+                },
+    			error:function(d){
+    	    		alert('您的网络断了，请检查网络情况，后刷新此页面！');
+    	    		window.location.reload();
+    	    		//clearInterval(timer);
+    	    		return false;
+    	    	},
+                timeout: 15000
+            })
+        }
+        getluckperson();
+    }
+    /*function gameResult() {
+        if(overGame){
+            return;
+        }
+        clearInterval(showtx);
+        overGame =true;
+        $(".winUserNum").html(fansNum);
+        //显示获奖人
+        overGame =false;
+        startGame = false;
+        tt = 0;
+        $("#start-draw").show();
+       	$('#close-draw').hide();
+       	closeing(); 
+    	setTimeout(function(){
+        	$("#wallCont").show();
+    	}, 1000);
+    }*/
+
+
+  $(".reset").on("click",function(){
+    var resetOk = confirm("您确定要重新抽奖，该奖品之前中奖记录将清空！");
+    var reset_award_id=$('select[name=awardid]').val();
+    if (resetOk == true){
+        $.ajax({
+        url: "ajax_act_lottory.php?action=reset",
+   		type:'post',
+        dataType: "json",
+        data: {
+        	awardid:reset_award_id,
+        	from:"threedimensionallottery"
+        },
+        beforeSend: function () {
+           
+        },
+        success: function (data) {
+                if(data.ret >0){
+                	var fansNum=parseInt($(".winUserNum").text());
+                	var lotteryUserNum=parseInt($(".lotteryUserNum").text());
+                	$(".lotteryUserNum").text(lotteryUserNum+fansNum);
+                    $(".lottery-box").html('');
+                    $(".winUserNum").html('0');
+                    alert("奖品重置成功，可以重新抽奖了。");
+                }else{
+                    alert("奖品重置失败，请刷新页面重试。")
+                }
+            },
+            error: function () {
+                alert("网络太慢了，重置失败！");
+            },
+            timeout: 15000
+        })
+
+      };
+    })
+
+  function spaceStart(){
+        if(!$('#close-draw').is(":hidden")){
+            if(overGame){
+                return;
+            }
+            notice_awarduser();
+        }else{
+            if(startGame){
+                return;
+            }
+            gameStart();
+        }
+  }
+
+    $(function(){
+    	bindhotkey();
+    	var clickstart=0;
+    	$(document).bind("keyup","space",function(){
+    		if(clickstart>0){
+ 			   var span=new Date().getTime()-clickstart;
+ 			   if(span<2000){
+ 				   return false;
+ 			   }
+ 		   }
+    		clickstart=new Date().getTime();
+    		spaceStart();
+    	});  
+    })
+  /*$(document).keydown(function(e){
+        if(e.which == 32) {
+            spaceStart();
+        }
+        
+   });*/
+
+  {/literal}
+    </script>
+ 

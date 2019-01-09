@@ -1,0 +1,153 @@
+<link rel="stylesheet" type="text/css" href="themes/meepo/assets/css/screen_shake_balloon.css">
+<style>
+{literal}
+.player .head { border-radius: 100%;}
+.yyycj { padding: 10px; height: 100%; box-sizing: border-box; }
+.yyycj ul, .yyycj li { list-style: none; margin: 0; padding: 0; }
+.yyycj ul { height: 100%; background-color:{$shake_config['paodao_color']}; position: relative }
+.yyycj ul li { display: block; overflow: hidden; height: 100%; width: 10%;float: left; }
+.yyycj ul li:nth-child(2n) { background-color: rgba(255,255,255,0.15) }
+.yyycj .ltoux { width: 250px; float: left; height: 100%; background-color: rgba(0, 112, 9, 0.56); position: relative }
+.yyycj .paimin { width: 46px; height: 46px; display: block; line-height: 46px; text-align: center; position: absolute; left: 10px; top: 50%; margin-top: -23px; font-size: 24px; color: #fff; font-family: Arial, san-serif; }
+.yyycj li:nth-child(1) .paimin { text-indent: -9999px; background: url(themes/meepo/assets/images/shake/1.png) no-repeat center center; }
+.yyycj li:nth-child(2) .paimin { text-indent: -9999px; background: url(themes/meepo/assets/images/shake/2.png) no-repeat center center; }
+.yyycj li:nth-child(3) .paimin { text-indent: -9999px; background: url(themes/meepo/assets/images/shake/3.png) no-repeat center center; }
+.yyycj .touxiang { width: 36px;
+height: 36px;
+border-radius: 100%;
+position: absolute;
+left: 50%;
+margin-left: -20px;
+top: 100px;
+border: 2px solid #ffffff;}
+.yyycj .nicheng {line-height: 46px;
+height: 46px;
+font-size: 18px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+display: block;
+position: absolute;
+left: 50%;
+margin-left: -27px;
+top: 140px;
+color: #FFF;
+text-align: center;width: 100%}
+.yyycj .paoma { height: 100%; position: relative; overflow: hidden; }
+.yyycj .paoma .ma {  background-size: 80px 100px; width: 80px; height: 100px; display: block; position: absolute; left: 50%;margin-left: -40px; bottom: 0; }
+.yyycj .paoma .tutu {  background-size: 120px 60px; width: 60px; height: 60px; display: block; position: absolute; margin-left: -30px;bottom: 0;left: 50%;}
+.yyycj .paoma .xxx { background: url(themes/meepo/assets/images/shake/xxx2.png) repeat-x left bottom; display: block; position: absolute; left:0; bottom: 0;  opacity: 0.5;height: 40px;width: 100%;padding-bottom: 10px}
+.yyycj .paoma .xxx i { display: block; width: 100%; height: 40px; line-height: 40px; font-size: 40px; text-align: center; color: rgba(255,255,255,0.9); font-family: Arial, san-serif; font-style: normal; }
+.yyycj .zd { background: url(themes/meepo/assets/images/shake/zd2.png) no-repeat center center; width: 100%; height: 45px; display: block; position: absolute; left: 0; top: 0;  opacity: 0.5;}
+.yyycj {position: relative;}
+.biaozhilogo {position: absolute;top: 50%;left: 50%;margin-left: -200px;margin-top: -200px;width: 400px;height: 400px;}
+.biaozhilogo img{width: 100%;height: 100%;}
+{/literal}
+</style>
+<script type="text/javascript">
+		var SHAKE_INFO = {$shakeinfo};
+		var paomatype =0;
+        /*当前轮次序号*/
+        var CURR_ROUND = {$shakeconfig['currentroundno']};
+        var CURR_ROUND_ID = -1;
+        var SHAKE_LINE = {$shakeconfig['maxdisplayplayers']};
+        var ROUNDS_LIST = ($.isArray(SHAKE_INFO['rotate_list'])) ? SHAKE_INFO['rotate_list'] : null;
+        var ROUND_COUNT = {$shakeconfig['maxround']};//(ROUNDS_LIST ? ROUNDS_LIST.length : 0);
+        for(var i = 0;i<ROUND_COUNT;i++){
+        	if(i==CURR_ROUND){
+        		CURR_ROUND_ID = ROUNDS_LIST[i]['id'];
+        		break;
+        	}
+        }
+//            if(ROUNDS_LIST[i].status!='3'){
+//                CURR_ROUND = i;
+//                CURR_ROUND_ID = ROUNDS_LIST[i]['id'];
+//                break;
+//            }
+//        }
+		var WEB_URL = "themes/meepo/assets/";
+ 
+    </script>
+    <script src="themes/meepo/assets/js/shake_base.js" type="text/javascript" charset="utf-8"></script>
+    <script src="themes/meepo/assets/js/screen_balloon.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body class="FUN SHAKE" >
+<div id="ddd">
+</div>
+<audio id="Audio_CutdownPlayer" src="themes/meepo/assets/images/shake/shake_cutdown.mp3" preload="preload"></audio>
+<audio id="Audio_NewPlayer" src="themes/meepo/assets/images/shake/shake_new.mp3" preload="preload"></audio>
+<audio id="Audio_Outride" src="themes/meepo/assets/images/shake//shake_outride.mp3" preload="preload"></audio>
+<audio id="Audio_Gameover" src="themes/meepo/assets/images/shake/shake_gameover.mp3" preload="preload"></audio>
+{include file="themes/meepo/top_panel.html"}
+<div class="Panel SloganList"></div>
+<div class="Panel Track" style=" opacity: 1;">
+      <div class="yyycj">
+      
+    <ul>
+          <li>
+        <div class="zd"></div>
+        <div class="paoma"> <span class="xxx"><i>1</i></span><span class="ma" style="height:0%"  id="ph0"  ><img class="touxiang" id="tx0" src="themes/meepo/assets/images/shake/touxiang.jpg" > <span id="nc0" class="nicheng"></span> </span> <span  id="pxh0" class="tutu" style="height:50%"  ></span>  </div>
+      </li>
+          <li>
+       
+        <div class="paoma"> <span class="xxx"><i>2</i></span><span class="ma" style="height:0%" id="ph1"  ><img id="tx1" class="touxiang" src="themes/meepo/assets/images/shake/touxiang.jpg" > <span id="nc1" class="nicheng"></span> </span> <span   id="pxh1" class="tutu"   style="height:10%"></span>  </div>
+      </li>
+          <li>
+       
+        <div class="paoma"><span class="xxx"><i>3</i></span> <span class="ma" style="height:0%" id="ph2"  ><img id="tx2" class="touxiang" src="themes/meepo/assets/images/shake/touxiang.jpg" > <span id="nc2" class="nicheng"></span></span> <span   id="pxh2" class="tutu"   style="height:44%" ></span>  </div>
+      </li>
+          <li>
+        
+        <div class="paoma"><span class="xxx"><i>4</i></span> <span class="ma" style="height:0%" id="ph3" ><img id="tx3" class="touxiang" src="themes/meepo/assets/images/shake/touxiang.jpg" > <span id="nc3" class="nicheng"></span></span> <span    id="pxh3" class="tutu" style="height:20%"  ></span>  </div>
+      </li>
+          <li>
+        
+        <div class="paoma"> <span class="xxx"><i>5</i></span><span class="ma" style="height:0%" id="ph4"   ><img id="tx4" class="touxiang" src="themes/meepo/assets/images/shake/touxiang.jpg" > <span id="nc4" class="nicheng"></span></span> <span    id="pxh4" class="tutu"   style="height:60%" ></span>  </div>
+      </li>
+          <li>
+        
+        <div class="paoma"> <span class="xxx"><i>6</i></span> <span class="ma" style="height:0%" id="ph5"   ><img id="tx5" class="touxiang" src="themes/meepo/assets/images/shake/touxiang.jpg" > <span id="nc5" class="nicheng"></span></span> <span   id="pxh5" class="tutu"   style="height:90%" ></span> </div>
+      </li>
+          <li>
+         
+        <div class="paoma"> <span class="xxx"><i>7</i></span><span class="ma" style="height:0%"  id="ph6"   ><img id="tx6" class="touxiang" src="themes/meepo/assets/images/shake/touxiang.jpg" > <span id="nc6" class="nicheng"></span></span> <span   id="pxh6"  class="tutu"   style="height:24%" ></span>  </div>
+      </li>
+          <li>
+       
+        <div class="paoma"> <span class="xxx"><i>8</i></span><span class="ma" style="height:0%" id="ph7"   ><img id="tx7" class="touxiang" src="themes/meepo/assets/images/shake/touxiang.jpg" > <span id="nc7" class="nicheng"></span></span> <span   id="pxh7" class="tutu"   style="height:10%" ></span>  </div>
+      </li>
+          <li>
+        
+        <div class="paoma"><span class="xxx"><i>9</i></span> <span class="ma" style="height:0%" id="ph8"   > <img id="tx8" class="touxiang" src="themes/meepo/assets/images/shake/touxiang.jpg" > <span id="nc8" class="nicheng"></span></span> <span   id="pxh8" class="tutu"   style="height:33%" ></span>  </div>
+      </li>
+          <li>
+       
+        <div class="paoma"><span class="xxx"><i>10</i></span> <span class="ma" style="height:0%" id="ph9"   ><img id="tx9" class="touxiang" src="themes/meepo/assets/images/shake/touxiang.jpg" > <span id="nc9" class="nicheng"></span></span> <span   id="pxh9" class="tutu"   style="height:88%"></span>  </div>
+      </li>
+          
+        </ul>
+	<!-- <div class="biaozhilogo"><img src="themes/meepo/assets/images/shake/car.png"></div> -->
+          </div>
+    </div>
+    <div class="cutdown-end"></div>
+    <div class="track-tool"></div>
+    <div class="track-result"></div>
+</div>
+<!--round welcome-->
+<div class="round-welcome"  style="z-index:2">
+    <div class="label top">微信扫二维码参与摇一摇</div>
+    <img src="{if $erweima==''}./defaultqrcode.php{else}{$erweima}{/if}" >
+    <div class="label bottom"><span class="shake-icon shake"></span>听从现场指挥，游戏开始后不停摇动手机</div>
+    <div class="button-start">开始游戏</div>
+    <div class="round-label">ROUND 1</div>
+</div>
+<div class="result-layer" style="display: none;">
+    <div class="result-label">GAME OVER</div>
+    <div class="result-cup">
+        <span class="button nexttound">开始下一轮</span>
+        <span class="button allresult">全部排名</span>
+        <span class="button reset">重玩本轮</span>
+    </div>
+</div>
+
+<div class="cutdown-start cutdownan-imation"></div>

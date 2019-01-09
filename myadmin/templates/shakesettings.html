@@ -1,0 +1,224 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+										{$title}
+						<small>显示每轮摇一摇的结果信息</small>
+						
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<form class="form-horizontal" role="form">
+									<!-- #section:elements.form -->
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">消息显示方式</label>
+										<div class="col-sm-9">
+											
+											<div class="radio-inline">
+					 								<label>
+														<input name="showstyle" type="radio" class="ace" value="1" {if $shake_config['showstyle']== 1}checked{/if} />
+														<span class="lbl">横向</span>
+													</label>
+												</div>
+
+												<div class="radio-inline">
+													<label>
+														<input name="showstyle" type="radio" class="ace" value="2" {if $shake_config['showstyle']== 2}checked{/if} />
+														<span class="lbl">纵向</span>
+													</label>
+												</div>
+											
+										</div>
+									</div>
+									<!--<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">大屏幕显示用户数</label>
+										<div class="col-sm-9">
+											<input type="text" id="form-field-1" name="maxdisplayplayers" placeholder="大屏幕上显示的用户数" class="col-xs-10 col-sm-5" value="{$shake_config['maxdisplayplayers']}" />
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-purple btn-sm " onclick="setmaxdisplayplayers()">
+													修改
+												</button>
+											</span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">最大参与人数</label>
+										<div class="col-sm-9">
+											<input type="text" id="form-field-1" name="maxplayers" placeholder="最大参与人数" class="col-xs-10 col-sm-5" value="{$shake_config['maxplayers']}" />
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-purple btn-sm " onclick="setmaxplayers()">
+													修改
+												</button>
+											</span>
+										</div>
+									</div>-->
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">游戏持续时间(秒)</label>
+										<div class="col-sm-9">
+											<input type="text" id="form-field-1" name="duration" placeholder="游戏持续时间，单位秒" class="col-xs-10 col-sm-5" value="{$shake_config['duration']}" />
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-purple btn-sm " onclick="setduration()">
+													修改
+												</button>
+											</span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">最大轮次</label>
+										<div class="col-sm-9">
+											<input type="text" id="form-field-1" name="maxround" placeholder="最大轮次" class="col-xs-10 col-sm-5" value="{$shake_config['maxround']}" />
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-purple btn-sm " onclick="setmaxround()">
+													修改
+												</button>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"></label>
+										<div class="col-sm-9">
+											<button type="button" class="btn btn-warning btn-sm " onclick="resetgame()">
+													重新初始化游戏
+											</button>
+											<button type="button" class="btn btn-purple btn-sm " onclick="resetcurrentgame()">
+													重新开始最新一轮活动
+											</button>
+										</div>
+									</div>
+								</form>
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+{literal}
+function setmaxdisplayplayers(){
+	var maxdisplayplayers=$('input[name=maxdisplayplayers]').val();
+	$.ajax({
+		'url':"doshakesettings.php?action=editmaxdisplayplayers",
+		'type':'post',
+		'data':{"maxdisplayplayers":maxdisplayplayers},
+		'dataType':'json',
+		'success':function(json){
+			alert(json.message);
+			return false;
+		}
+	})
+}
+function setmaxplayers(){
+	var maxplayers=$('input[name=maxplayers]').val();
+	$.ajax({
+		'url':"doshakesettings.php?action=editmaxplayers",
+		'type':'post',
+		'data':{"maxplayers":maxplayers},
+		'dataType':'json',
+		'success':function(json){
+			alert(json.message);
+			return false;
+		}
+	})
+}
+function setduration(){
+	var duration=$('input[name=duration]').val();
+	$.ajax({
+		'url':"doshakesettings.php?action=editgameduration",
+		'type':'post',
+		'data':{"duration":duration},
+		'dataType':'json',
+		'success':function(json){
+			alert(json.message);
+			return false;
+		}
+	})
+}
+function setmaxround(){
+	var maxround=$('input[name=maxround]').val();
+	$.ajax({
+		'url':"doshakesettings.php?action=editgamemaxround",
+		'type':'post',
+		'data':{"maxround":maxround},
+		'dataType':'json',
+		'success':function(json){
+			alert(json.message);
+			return false;
+		}
+	})
+}
+function resetgame(){
+	if(!confirm('确认要清除所有摇一摇数据吗？'))return false;
+	$.ajax({
+		'url':"doshakesettings.php?action=resetgame",
+		'type':'get',
+		'dataType':'json',
+		'success':function(json){
+			alert(json.message);
+			return false;
+		}
+	})
+}
+function resetcurrentgame(){
+	if(!confirm('确认要重新开始本轮摇一摇？'))return false;
+	$.ajax({
+		'url':"doshakesettings.php?action=resetgamecurrentround",
+		'type':'get',
+		'dataType':'json',
+		'success':function(json){
+			alert(json.message);
+			return false;
+		}
+	})
+}
+$(function(){
+	$('input[name=showstyle]').bind('click',function(){
+		//console.log('test');
+		var showstyle=$('input[name=showstyle]:checked').val();
+		set_showstyle(showstyle);
+	})
+})
+function set_showstyle(style){
+	jQuery.ajax({
+		"url":'doshakesettings.php?action=set_showstyle',
+		"data":{"showstyle":style},
+		"type":'post',
+		"dataType":"json",
+		"success":function(json){
+			if(json.code<0)
+				alert(json.message);
+			return false;
+		}
+	});
+}
+
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

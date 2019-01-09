@@ -1,0 +1,195 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>抽奖设置，设置抽奖结果显示方式</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									<form class="form-horizontal" role="form">
+									
+									
+									<!-- #section:elements.form -->
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">抽奖结果显示</label>
+										<div class="col-sm-9">
+											
+											<div class="radio-inline">
+					 								<label>
+														<input name="cjshowtype" type="radio" class="ace" value="1" {if $cjshowtype== 1}checked{/if} />
+														<span class="lbl">昵称</span>
+													</label>
+												</div>
+
+												<div class="radio-inline">
+													<label>
+														<input name="cjshowtype" type="radio" class="ace" value="2" {if $cjshowtype== 2}checked{/if} />
+														<span class="lbl">姓名</span>
+													</label>
+												</div>
+												<div class="radio-inline">
+													<label>
+														<input name="cjshowtype" type="radio" class="ace" value="3" {if $cjshowtype== 3}checked{/if} />
+														<span class="lbl">手机号</span>
+													</label>
+												</div>
+										</div>
+									</div>
+									<!-- #section:elements.form -->
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">3d抽奖结果显示</label>
+										<div class="col-sm-9">
+											
+											<div class="radio-inline">
+					 								<label>
+														<input name="threedimensionallotteryshowtype" type="radio" class="ace" value="1" {if $threedimensionallotteryshowtype== 1}checked{/if} />
+														<span class="lbl">昵称</span>
+													</label>
+												</div>
+
+												<div class="radio-inline">
+													<label>
+														<input name="threedimensionallotteryshowtype" type="radio" class="ace" value="2" {if $threedimensionallotteryshowtype== 2}checked{/if} />
+														<span class="lbl">姓名</span>
+													</label>
+												</div>
+												<div class="radio-inline">
+													<label>
+														<input name="threedimensionallotteryshowtype" type="radio" class="ace" value="3" {if $threedimensionallotteryshowtype== 3}checked{/if} />
+														<span class="lbl">手机号</span>
+													</label>
+												</div>
+											
+										</div>
+									</div>
+									<!-- #section:elements.form -->
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">抽奖箱结果显示</label>
+										<div class="col-sm-9">
+											
+											<div class="radio-inline">
+					 								<label>
+														<input name="cjxshowtype" type="radio" class="ace" value="1" {if $cjxshowtype== 1}checked{/if} />
+														<span class="lbl">昵称</span>
+													</label>
+												</div>
+
+												<div class="radio-inline">
+													<label>
+														<input name="cjxshowtype" type="radio" class="ace" value="2" {if $cjxshowtype== 2}checked{/if} />
+														<span class="lbl">姓名</span>
+													</label>
+												</div>
+												<div class="radio-inline">
+													<label>
+														<input name="cjxshowtype" type="radio" class="ace" value="3" {if $cjxshowtype== 3}checked{/if} />
+														<span class="lbl">手机号</span>
+													</label>
+												</div>
+											
+										</div>
+									</div>
+									<!-- #section:elements.form -->
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">砸金蛋结果显示</label>
+										<div class="col-sm-9">
+											
+											<div class="radio-inline">
+					 								<label>
+														<input name="zjdshowtype" type="radio" class="ace" value="1" {if $zjdshowtype== 1}checked{/if} />
+														<span class="lbl">昵称</span>
+													</label>
+												</div>
+
+												<div class="radio-inline">
+													<label>
+														<input name="zjdshowtype" type="radio" class="ace" value="2" {if $zjdshowtype== 2}checked{/if} />
+														<span class="lbl">姓名</span>
+													</label>
+												</div>
+												<div class="radio-inline">
+													<label>
+														<input name="zjdshowtype" type="radio" class="ace" value="3" {if $zjdshowtype== 3}checked{/if} />
+														<span class="lbl">手机号</span>
+													</label>
+												</div>
+											
+										</div>
+									</div>
+									</form>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<script type="text/javascript">
+{literal}
+//自动审核开关
+$(function(){
+	$('input[name=cjshowtype]').bind('click',function(){
+		//console.log('test');
+		var cjshowtype=$('input[name=cjshowtype]:checked').val();
+		set_showstyle('cjshowtype',cjshowtype);
+	});
+	$('input[name=threedimensionallotteryshowtype]').bind('click',function(){
+		//console.log('test');
+		var threedimensionallotteryshowtype=$('input[name=threedimensionallotteryshowtype]:checked').val();
+		set_showstyle('threedimensionallotteryshowtype',threedimensionallotteryshowtype);
+	})
+	$('input[name=cjxshowtype]').bind('click',function(){
+		//console.log('test');
+		var cjxshowtype=$('input[name=cjxshowtype]:checked').val();
+		set_showstyle('cjxshowtype',cjxshowtype);
+	})
+	$('input[name=zjdshowtype]').bind('click',function(){
+		//console.log('test');
+		var zjdshowtype=$('input[name=zjdshowtype]:checked').val();
+		set_showstyle('zjdshowtype',zjdshowtype);
+	})
+})
+function set_showstyle(key,val){
+	jQuery.ajax({
+		"url":'dolotterysettings.php?action=set_showstyle',
+		"data":{"key":key,"val":val},
+		"type":'get',
+		"dataType":"json",
+		"success":function(json){
+			if(json.code<0)
+				alert(json.message);
+			return false;
+		}
+	});
+}
+{/literal}
+</script>
+<!-- 写每个页面自定的js -->
+{include file="templates/html_footer.html"}

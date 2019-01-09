@@ -1,0 +1,85 @@
+<link rel="stylesheet" type="text/css" href="themes/meepo/assets/css/screen_zjd.css">
+<script src="themes/meepo/assets/js/lotter_free_base.js" type="text/javascript" charset="utf-8"></script>
+<script src="themes/meepo/assets/js/screen_zjd.js?t=10" type="text/javascript" charset="utf-8"></script>
+</head>
+<body class="FUN LOTTERY_FREE" >
+<audio id="Audio_Running" src="themes/meepo/assets/images/zjd/lottery_running.mp3" loop preload="preload"></audio>
+<audio id="Audio_Result" src="themes/meepo/assets/images/zjd/smashegg.mp3" preload="preload"></audio>
+{include file="themes/meepo/top_panel.html"}
+<div class="Panel Lottery"  ><img class="boxFront" src="themes/meepo/assets/images/zjd/box2.png" >
+    <div class="lottery-left">
+        <div class="lottery-run">      
+			<div class="outBox">
+				<div class="box">
+					<img class="boxImg" src="themes/meepo/assets/images/zjd/box.png">
+					<img class="boxLeft" src="themes/meepo/assets/images/zjd/boxLeft.png">
+					<img class="boxRight" src="themes/meepo/assets/images/zjd/boxRight.png">
+				</div>
+				<div class="hand">
+					<div class="hand1"></div>
+					<div class="hand2"></div>
+					<div class="user toux3"><p class="nick-name"></p><p class="mobile"></p></div>
+				</div>
+			</div>  
+        </div>
+        <div class="lottery-bottom">
+            <div class="round-num">
+            	
+                <div class="select-panel">
+      				<div style="display:inline-block">选择奖项:</div>
+							<select name="luckTag" id="tagid" onchange="changeLuck(this.value);">
+									<option value="-1">--请选择奖项--</option>
+									{foreach $awardlist as $item}
+									<option value="{$item['id']}">{$item['awardname']}</option>
+									{/foreach}
+							</select>
+      				          
+                <div style="display:inline-block;margin-left:20px;">选择人数:</div>
+                    <select id="num">
+								<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+													<option value="10">10</option>
+													<option value="11">11</option>
+													<option value="12">12</option>
+													<option value="13">13</option>
+													<option value="14">14</option>
+													<option value="15">15</option>
+													<option value="16">16</option>
+													<option value="17">17</option>
+													<option value="18">18</option>
+													<option value="19">19</option>
+													<option value="20">20</option>
+													<option value="30">30</option>
+													<option value="40">40</option>
+													<option value="50">50</option>
+													<option value="60">60</option>
+													<option value="70">70</option>
+													<option value="80">80</option>
+													<option value="90">90</option>
+													<option value="100">100</option>
+							</select>
+
+                    　总共<span class="usercount-label">2人</span>
+                </div>
+            </div>
+            <div class="control button-run" style="display: none;">开始抽奖</div>
+            <div class="control button-stop" style="display: block;">开始砸蛋</div>
+            <div class="control button-nextround" style="display: none;">下一轮</div>
+            <!--<div class="button-showresult">全部结果</div>-->
+            <div class="button-reload">重新加载</div>
+        </div>
+
+    </div>
+    <div class="lottery-right" style="z-index:999;">
+        <div class="result-line">
+            <div class="result-num">1</div>
+        </div>
+    </div>
+</div>

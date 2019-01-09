@@ -1,0 +1,18 @@
+<div class="Panel Top">
+<div class="top_menu">
+    <img class="activity_logo" src="{if $wall_config['logoimg']==''}themes/meepo/assets/images/blank.png{else}{$wall_config['logoimg']}{/if}" onerror="this.src='{$wall_config['logoimg']}'" >
+    <div class="top_title" style="font-size: 20px">
+			            <div >{$wall_config['welcometext1']}</div>
+           </div>
+    <style>
+    {literal}
+    .bigqrcode{
+    	width:300px;
+    	height:300px;
+    	z-index:9999;
+    }
+    {/literal}
+    </style>
+    <img class="mp_account_codeimage" src="{if $erweima==''}./defaultqrcode.php{else}{$erweima}{/if}" onerror="{if $erweima==''}./defaultqrcode.php{else}{$erweima}{/if}" />
+</div>
+</div>

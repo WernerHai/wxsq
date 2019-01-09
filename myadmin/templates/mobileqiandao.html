@@ -1,0 +1,91 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+
+							<li>
+								<a href="#">签到设置</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>发布的公告可以在上墙界面大屏幕上看到</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									<form class="form-horizontal" method="post" action="domobileqiandao.php?action=setmobileqiandaobg" role="form" enctype="multipart/form-data">
+										<div class="form-group">
+											<label class="col-sm-3 control-label no-padding-right" for="mobileqiandaobg">手机签到背景图：</label>
+											<div class="col-sm-9">
+												<input multiple="" type="file" class="imageuploader" id="mobileqiandaobg" name="mobileqiandaobg"/>
+												<div class="hr hr-12 dotted"></div>
+												<button type="submit" class="btn btn-sm btn-primary">保存</button>
+												<span class="alert-info">要求宽600*高1200像素图，不要超过500kb</span>
+											</div>
+										</div>
+									</form>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+{literal}
+jQuery(function($){
+	$('.imageuploader').ace_file_input({
+		style: 'well',
+		btn_choose: '点击此处选择图片',
+		btn_change: null,
+		no_icon: 'ace-icon fa fa-cloud-upload',
+		droppable: true,
+		maxSize: 550000,
+		allowExt: ["jpeg", "jpg", "png", "gif"],
+		allowMime: ["image/jpg", "image/jpeg", "image/png", "image/gif"],
+		thumbnail: 'large',//large | fit
+		previewHeight:200,
+		preview_error : function(filename, error_code) {
+		}
+
+	}).on('change', function(){
+	});
+	{/literal}
+		{if $mobileqiandaobg!=''}
+		{literal}
+		$('#mobileqiandaobg')
+		.ace_file_input('show_file_list', [
+			{type: 'image', name: '背景图', path: '{/literal}{$mobileqiandaobg}{literal}'},
+		]);
+		{/literal}
+		{/if}
+
+		{literal}
+});
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

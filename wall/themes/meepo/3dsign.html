@@ -1,0 +1,367 @@
+<link rel="stylesheet" type="text/css" href="themes/meepo/assets/css/screen_lottory_free.css">
+<link rel="stylesheet" href="themes/meepo/assets/css/3d.css">
+<link rel="stylesheet" href="themes/meepo/assets/css/3dstyle.css" media="screen" type="text/css">
+<link rel="stylesheet" href="themes/meepo/assets/css/normalize.css">
+<script src="themes/meepo/assets/js/qdbase.js" type="text/javascript" charset="utf-8"></script>
+<script src="themes/meepo/assets/js/screen_qd.js" type="text/javascript" charset="utf-8"></script>
+<style>
+.tuchu{
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	bottom:0;
+	right:0;
+	background-color:rgba(0,0,0,0.75); 
+	z-index:2;
+	display:none
+	} 
+		.tuchug {
+	border-radius:100%;
+	top:50%;
+	left:50%;
+	margin:-350px 0 0 -350px;
+	width:700px;
+	height:700px;
+	position:absolute;
+	z-index:4;
+}
+.tuchuk {
+	background-color:#FFF;
+	border-radius:10px;
+	top:50%;
+	left:50%;
+	margin:-200px 0 0 -150px;
+	width:300px;
+	height:400px;
+	position:absolute;
+	z-index:4;
+}
+.tx {
+	width:226px;
+	height:226px;
+	border-radius:100%;
+	overflow:hidden;
+	margin:40px 37px 15px 37px;
+}
+.xm {
+	font-size:20px;
+	color:#000;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	padding:12px 0;
+	text-align:center;
+	position:absolute;
+	bottom:0;
+	margin:0;
+	width:100%;
+	background-color:rgba(245,245,245,0.57);
+	border-radius:0 0 10px 10px;
+}
+.pm {
+	font-size:20px;
+	text-align:center;
+	background-color:rgba(255,255,255,1);
+	color:#000;
+	margin:15px auto;
+	padding:0;
+	border-radius:100px;
+	width:75%;
+}
+.pm .red {
+	color:#ff7575;
+}
+
+.tuchu.view {
+	display:block;
+	-webkit-animation:vp 0.5s 8s ease forwards;
+	-moz-animation:0.5s 8s ease forwards;
+}
+.view .tuchuk {
+	-webkit-animation:vv 8s 0s ease forwards;
+	-moz-animation:8s 0s ease forwards;
+}
+.view .tuchug {
+	-webkit-animation:vg 6.5s 1s ease forwards;
+	-moz-animation:6.5s 1s ease forwards;
+	opacity:0;
+}
+@-webkit-keyframes vv {
+	0% {
+	-webkit-transform:scale(0.1);
+	opacity:0;
+}
+10% {
+	-webkit-transform:scale(1.5);
+	opacity:1;
+}
+20% {
+	-webkit-transform:scale(1);
+	opacity:1;
+}
+90% {
+	-webkit-transform:scale(1);
+	opacity:1;
+}
+100% {
+	-webkit-transform:scale(0);
+	opacity:0;
+}
+}@-webkit-keyframes vp {
+	0% {
+	-webkit-transform:scale(1);
+	opacity:1;
+}
+100% {
+	-webkit-transform:scale(1);
+	opacity:0;
+}
+}@-webkit-keyframes vg {
+	0% {
+	-webkit-transform:rotate(0);
+	opacity:0;
+}
+10% {
+	-webkit-transform:rotate(0);
+	opacity:1;
+}
+90% {
+	-webkit-transform:rotate(60deg);
+	opacity:1;
+}
+100% {
+	-webkit-transform:rotate(70deg);
+	opacity:0;
+}
+</style>
+</head>
+<body class="FUN WALL" >
+<div class="ui" style="display:none">
+	<input class="ui-input" type="text" />
+	<span class="ui-return"></span> 
+</div> 
+<input type="hidden" id="max_id" name="max_id" value="{$qd_maxid}">
+{include file="themes/meepo/top_panel.html"}
+<div id="container" style="display:none;opacity: 0;"></div>
+<canvas class="canvas" style="display:none;opacity: 0;"></canvas>
+<div class="tuchu ">
+  <div class="tuchug">
+    <img src="themes/meepo/assets/images/icon/bbb.png"></div>
+  <div class="tuchuk">
+    <img class="tx" id="qdtx" src="http://wx.qlogo.cn/mmopen/ctSue0WnfibLR4ponCgXLv4G9Y43YFEXv5UboZuvHbvwkz6QXEYvw4RyuktMxhicq22efPTnwhPRhT67FIia2dmKDlIb4falNbN/132">
+    <p class="pm">第
+      <span class="red" id="qdnums">0</span>位签到</p>
+    <p class="xm" id="qdname">官方签到女神</p></div>
+</div>
+      
+<div class="Panel Lottery" style="display: none; opacity: 1;">
+
+      
+<div id="ddd"></div>
+  <script type="text/javascript">
+    	var is_show_info = 1;
+    	var hFont;
+    /*** html节点字体大小随屏幕大小改变 ***/
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function () {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                hFont = 20 * (clientWidth / 320);
+                docEl.style.fontSize = hFont + 'px';
+            };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);	   
+	function senddh(){
+		$('.canvas').show();
+		$('.canvas,#container').css('opacity','1');
+	}
+	window.AvatarGap={$threedimensional_config['avatargap']};
+	window.AvatarSize={$threedimensional_config['avatarsize']};
+	window.AvatarNum={$threedimensional_config['avatarnum']};
+</script>
+<script src="themes/meepo/assets/js/2d.js?"></script>
+<script type="text/javascript">
+{literal}
+	var new_sign_arr=[];
+	
+	function shownewsign(){
+		if(new_sign_arr.length<=0){
+			return false;
+		}
+		var person=new_sign_arr.shift();
+		$("#qdtx").attr("src", person.avatar);
+        $("#qdnums").html(person.signorder);
+        $("#qdname").html(person.nickname);
+		$('.tuchu').addClass('view');
+		window.setTimeout(function(){$(".tuchu").removeClass('view');},3000);
+	}
+	
+	$(function(){
+		setInterval(function(){shownewsign()},5000);
+	})
+	
+    S.Drawing.init('.canvas');
+    /* 默认图片列表 */
+    var placeholder_image_arr = ["themes\/meepo\/assets\/images\/noavatar.jpg"];
+    var placeholder_image_cnt = placeholder_image_arr.length;
+    var placeholder_image_index = 0;
+    var default_placeholder_image = placeholder_image_arr[0];
+/* 已经签到的用户列表 */
+var personArray = {/literal}{$personJson}{literal};
+
+var edit_personArray = new Array;
+var placeholder_image = default_placeholder_image;
+var table = new Array;
+/*
+for (var i=0;i<160;i++){
+	table[i]=new Object();
+	if(i<personArray.length){
+		table[i] = personArray[i];
+		table[i].src=personArray[i].avatar;
+	}else{
+		if (placeholder_image_cnt > 0){
+			if (placeholder_image_index >= placeholder_image_cnt){
+					placeholder_image_index = 0;
+			}
+			placeholder_image = placeholder_image_arr[placeholder_image_index];
+			placeholder_image_index++;
+		}
+		table[i].src= placeholder_image;
+	}
+	table[i].p_x = i%20+1;
+	table[i].p_y = Math.floor(i/20)+1;
+}
+*/
+var l=personArray.length;
+for (var i=0;i<160;i++){
+	table[i]=new Object();
+	
+	if(l>0){
+		table[i] = personArray[i%l];
+		table[i].src=personArray[i%l].avatar;
+	}else{
+		if (placeholder_image_cnt > 0){
+			if (placeholder_image_index >= placeholder_image_cnt){
+					placeholder_image_index = 0;
+			}
+			placeholder_image = placeholder_image_arr[placeholder_image_index];
+			placeholder_image_index++;
+		}
+		table[i].src= placeholder_image;
+	}
+	table[i].p_x = i%20+1;
+	table[i].p_y = Math.floor(i/20)+1;
+}
+
+//打乱数组顺序
+table = table.sort(function(){return Math.random()});	
+/* 动画墙显示 屏 列表 */
+//var signwall_show_str = "米波网络|#sphere|#torus|#helix";
+var signwall_show_str = "{/literal}{$threedimensional_config['datastr']}{literal}";
+/* 动画墙 切换时间？做什么用？ */
+var show_interval = "0"; // 间隔时间
+var return_array = new Array();
+function getArrayItems(arr, num) {
+    //新建一个数组,将传入的数组复制过来,用于运算,而不要直接操作传入的数组;
+    var temp_array = new Array();
+    for (var index in arr) {
+        temp_array.push(arr[index]);
+    }
+    //取出的数值项,保存在此数组
+    for (var i = 0; i<num; i++) {
+        //判断如果数组还有可以取出的元素,以防下标越界
+        if (temp_array.length>0) {
+            //在数组中产生一个随机索引
+            var arrIndex = Math.floor(Math.random()*temp_array.length);
+            //将此随机索引的对应的数组元素值复制出来
+            return_array[i] = temp_array[arrIndex];
+            //然后删掉此索引的数组元素,这时候temp_array变为新的数组
+            temp_array.splice(arrIndex, 1);
+        } else {
+            //数组中数据项取完后,退出循环,比如数组本来只有10项,但要求取出20项.
+            return false;
+        }
+    }
+    return return_array;
+}
+getArrayItems(personArray,window.AvatarNum);
+window.onload = function(){ 
+	S.init();
+	S.UI.simulate(signwall_show_str);
+}
+var signBox = $('.signBox'),
+imgShow = $('.imgShow'),
+newPic = new Array(),
+signNo = 0,
+className = " rightBottom ",
+name,job,company,text,bowtie;
+setInterval(get_new_sign_list, 2000);
+  function get_new_sign_list(){
+  	var data = {};
+  	data.mid =  $('#max_id').val();
+  	$.ajax({
+  		url : "ajax_act_get_new_sign.php",
+  		dataType:"JSON",
+  		type:"GET",
+  		data:data,
+  		success:function(result){  
+  				if (result.mid){
+  					$('#max_id').val(result.mid);
+  				}  	
+				if (result.omid < result.mid) { 
+						new_sign_arr.push(result);
+				
+						personArray.push(result);
+						var elements=$('.element');
+						var len=personArray.length;
+						for(var i=0,l=elements.length;i<l;i++){
+							if(i%len==0){
+								$('.element').eq(i).find('img').attr('src',result.avatar);
+							}
+							
+						}
+						
+  				}
+  			
+  		}//success
+  	});
+	
+};
+setInterval(function() {
+	getArrayItems(personArray,window.AvatarNum);
+}, 10 * 1000);
+  	</script>
+  	<script src="themes/meepo/assets/js/three.min.js"></script>
+ 	<script src="themes/meepo/assets/js/tween.min.js"></script>
+  	<script src="themes/meepo/assets/js/CSS3DRenderer.js"></script>
+  	<script src="themes/meepo/assets/js/3d.js"></script>
+  	<script type="text/javascript">
+		init();
+		animate();
+		transform( targets.table, 2000, 'table', 10);
+		var signAlert = $("#signAlert");
+	    /* 新增功能，头像弹窗的展示与关闭 */
+		function addEventHandler(ele, event, hanlder) {
+				if (ele.addEventListener) {
+						ele.addEventListener(event, hanlder, false);
+				} else if (ele.attachEvent) {
+						ele.attachEvent("on"+event, hanlder);
+				} else  {
+						ele["on" + event] = hanlder;
+				}
+		 }
+		function isNull(value) {
+			if (typeof value === "undefined" || typeof value === "" || typeof value === "null" || value == "null" || value == null || value == "" || value == "undefined") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		{/literal}     
+ </script>
+</div>

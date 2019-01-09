@@ -1,0 +1,40 @@
+
+    <link rel="stylesheet" type="text/css" href="template/app/css/phone_shake.css">
+    <script src="template/app/js/jquery.mobile.events.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        var PATH_ACTIVITY = '';
+		var rotate_id = '';
+        var SHAKE_INFO = '';
+    </script>
+    <script src="template/app/js/base.js" type="text/javascript" charset="utf-8"></script>
+    <script src="template/app/js/phone_paoma.js?t=1" type="text/javascript" charset="utf-8"></script>
+    <script src="template/app/js/bubbly-bg.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<style>
+{literal}
+.shake-icon {
+background-image:url({/literal}{if $shake_config['showstyle']==1}template/app/images/shake/shake0.png{else}template/app/images/shake/shake1.png{/if}{literal}) !important;
+background-repeat:no-repeat;
+background-size: cover;
+width:300px;
+height:300px;
+top:50%;
+left:50%;
+margin-top:-180px;
+margin-left:-150px;
+outline:none;
+}
+{/literal}
+</style>
+<body class="shakeing1">
+            <audio id="ShakeAudio" src="template/app/images/shake/v4.mp3" preload="preload"></audio>
+        <div class="memo">听从现场指挥摇动手机</div>
+    <div class="shake-icon"></div>
+    <input type="hidden" id="openid" value="{$openid}"/>
+<script type="text/javascript">
+{literal}
+    bubbly();
+    {/literal}
+    </script>
+

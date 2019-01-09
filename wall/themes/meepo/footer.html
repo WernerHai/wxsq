@@ -1,0 +1,352 @@
+<link rel="stylesheet" type="text/css" href="themes/meepo/assets/css/footer.css">
+<link rel="stylesheet" type="text/css" href="themes/meepo/assets/skin/style2.css">
+ <div class="Panel Bottom"  >
+<div class="bottommenu" >
+        <img class="support_logo" src="{if $wall_config['bottom_logoimg']==''}themes/meepo/assets/images/blank.png{else}{$wall_config['bottom_logoimg']}{/if}" onerror="this.src='{$wall_config['bottom_logoimg']}'" >
+        <div class="helperpanel pulse">
+         <span class="ssgz">{$wall_config['welcometext2']}</span>
+    </div>
+    <div class="navbar">
+         <ul class="navbarmenu">
+            <li class="curr">
+              <a  class="neicon small" id="show_qd_code">
+                <img class="" src="themes/meepo/assets/images/icon/icons-003.png">
+                <p>二维码</p>
+              </a>
+            </li>	
+            <li class="curr">
+              <a  class="neicon small close" id="danmu_switch" >
+                <img class="" src="themes/meepo/assets/images/icon/danmu_close.png">
+                <p>弹幕</p>
+              </a>
+            </li>
+			<li class="curr">
+              <a onclick="document.getElementById('videoplay').style.display='block';" class="neicon small">
+                <img class="" src="themes/meepo/assets/images/icon/icons-007.png">
+                <p>视频</p>
+              </a>
+            </li>
+            <li class="curr">
+              <a onclick="document.getElementById('popup').style.display='block';" class="neicon small">
+                <img class="" src="themes/meepo/assets/images/icon/icons-001.png">
+                <p>应用</p>
+              </a>
+            </li>
+            <li class="curr">
+              <a class="neicon small navbaritem fullscreen" href="#">
+                <img class="" src="themes/meepo/assets/images/icon/icons-002.png">
+                <p>全屏</p>
+              </a>
+            </li>
+          </ul>
+        <div class="btn-popup hidden" id="popup">
+            <i class="closeb" onclick="document.getElementById('popup').style.display='none';"></i>
+            <i class="icon-arrow2"></i>
+            <ul class="btn-list clearfix">
+            {foreach $plugs as $item}
+            {if $item['name']=='redpacket'}
+            {if $wall_config['rentweixin']==1}
+             <li class="curr">
+                <a href="{$item['url']}" class="neicon">
+                  <img class="{$item['name']}" src="{$item['img']}">
+                  <p>{$item['title']}</p>
+                </a>
+              </li>
+              {/if}
+              {else}
+              <li class="curr">
+                <a href="{$item['url']}" class="neicon">
+                  <img class="{$item['name']}" src="{$item['img']}">
+                  <p>{$item['title']}</p>
+                </a>
+              </li>
+              {/if}
+              {/foreach }
+			</ul>
+          </div>
+        </div>
+        
+
+</div>
+</div>
+  <div class="videoplay" id="videoplay"> <i class="closeb" onclick="document.getElementById('videoplay').style.display='none';"></i>
+  <video class="video_id" id="video_id" controls autoplay ></video>
+  <input id="v_file" type="file" style="display:none;" onChange="play()"/>
+  <button id="play" onClick="yincang()" class="playbtn">打开MP4视频文件</button>
+  <script>
+  
+function yincang(){
+var v_file=document.getElementById('v_file');
+v_file.click();
+}
+function play(){
+var file = document.getElementById('v_file').files[0];
+var url = URL.createObjectURL(file);
+console.log(url);
+document.getElementById("video_id").src = url;
+}
+</script> 
+</div>  <div class="skinLayer" id="skinLayer"> <i class="closeb" onclick="document.getElementById('skinLayer').style.display='none';"></i>
+      <div class="stylebg">
+    <!--label>
+          <input name="" onchange="changeit(this)"      type="checkbox" value="1">
+          强制使用自定义背景</label-->
+  </div>
+      <div class="style-center">
+    <div class="style-nav">
+          <ul class="style-nav-list">
+       
+      </ul>
+        </div>
+    <div class="style-box">
+          <ul class="style-img-list" >
+        
+      </ul>
+        </div>
+  </div>
+    </div>
+    <link rel="stylesheet" type="text/css" href="/wall/themes/meepo/assets/plugs/jquery.barrager.js/dist/css/barrager.css">
+    <script type="text/javascript" src="/wall/themes/meepo/assets/plugs/jquery.barrager.js/dist/js/jquery.barrager.js"></script>
+  <script>
+  {literal}
+  var screenheight=0;
+  var bottom=0;
+  $(function(){
+	  //1关2开
+
+	  if(danmuconfig.danmuswitch==2){
+		  opendanmu();
+	  }
+	  
+	 screenheight=$(window).height();
+	  //弹幕的起始高度
+	  if(danmuconfig.positionmode==1){
+		  bottom=screenheight/3*2;
+	  }
+	  if(danmuconfig.positionmode==2){
+		  bottom=screenheight/3;
+	  }
+	  //暂时关闭弹幕功能，等待服务器优化好了再开启
+	 $('#danmu_switch').bind('click',function(){
+		 var isclose=$(this).hasClass('close');
+		 if(isclose){
+			 //打开弹幕
+			 opendanmu();
+			 
+		 }else{
+			 //关闭弹幕
+			 closedanmu();
+			 
+		 }
+		 console.log(isclose);
+	 });
+  });
+  var danmuconfig={/literal}{$danmuconfig}{literal};
+  var loopdanmmu;
+  var playdanmutimer;
+  //记录弹幕的缓存
+  var messages=[];
+  var loopindex=0;
+  function opendanmu(){
+	  $.ajax({
+		  "url":"ajax_act_danmu_config.php",
+		  "data":{"danmuswitch":2},
+		  "type":"get",
+		  "dataType":"json",
+		  "success":function(json){
+			  if(json.ret>0){
+				  getdanmudata();
+				  playdanmu();
+				  $('#danmu_switch').find('img').attr('src','themes/meepo/assets/images/icon/danmu.png');
+				  $('#danmu_switch').removeClass('close');
+			  }
+		  }
+	  })
+	  
+  }
+  function closedanmu(){
+	  $.ajax({
+		  "url":"ajax_act_danmu_config.php",
+		  "data":{"danmuswitch":1},
+		  "type":"get",
+		  "dataType":"json",
+		  "success":function(json){
+			  if(json.ret>0){
+				  $.fn.barrager.removeAll();
+				  clearTimeout(loopdanmmu);
+				  clearTimeout(playdanmutimer);
+				  $('#danmu_switch').find('img').attr('src','themes/meepo/assets/images/icon/danmu_close.png');
+				  $('#danmu_switch').addClass('close');
+			  }
+		  }
+	  })
+	  
+  }
+  function playdanmu(){
+	  if(messages.length>0){
+		  //不循环
+		  var item;
+		  if(danmuconfig.isloop==1){
+			  item=messages.shift();
+		  }
+		  //循环
+		  if(danmuconfig.isloop==2){
+			  //historynum数据条数
+			  if(messages.length>danmuconfig.historynum){
+				  item=messages.shift();
+			  }else{
+				  var loopmessagenum=messages.length<danmuconfig.historynum?messages.length:danmuconfig.historynum;
+				  item=messages[loopindex%loopmessagenum];
+				  loopindex=(loopindex%loopmessagenum+1);
+				  console.log(loopindex);
+			  }
+		  }
+		  item.speed=15+Math.random()*5;
+		  item.bottom=bottom+Math.random()*((danmuconfig.positionmode==4)?screenheight:screenheight/3);
+		  
+		  $('body').barrager(item);
+	  }
+	  playdanmutimer=setTimeout(function(){playdanmu();},danmuconfig.looptime*1000);
+  }
+  
+  //获取弹幕数据
+  var shenhetime=0;
+  function getdanmudata(){
+	  $.ajax({
+		  "url":"ajax_act_get_danmu.php",
+		  "data":{"shenhetime":shenhetime},
+		  "type":"get",
+		  "dataType":"json",
+		  "success":function(json){
+			  //1 上1/3 2中1/3 3下1/3 4全屏
+		      //screenheight
+			  if(json.ret>=0){
+				  var data=json.data;
+				  for(var i=0,l=json.data.length;i<l;i++){
+					  var message={};
+					  message.img=json.data[i].avatar;
+					  if(danmuconfig.showname==1){
+						  message.info=json.data[i].content;
+					  }else{
+						  message.info=json.data[i].nick_name+'：'+json.data[i].content;
+					  }
+					  
+					  message.close=false;
+					  
+					  message.color=danmuconfig.textcolor;
+					  message.old_ie_color=danmuconfig.textcolor;
+					  console.log(message);
+					  messages.push(message);
+					  shenhetime=shenhetime>json.data[i].shenhetime?shenhetime:json.data[i].shenhetime;
+				  }
+			  }
+			  
+			  loopdanmmu=setTimeout(function(){getdanmudata()},3000);
+		  },
+		  error:function(){
+			  loopdanmmu=setTimeout(function(){getdanmudata()},10000);
+		  },
+          timeout: 10000
+	  })
+  }
+  
+	  
+  
+      {/literal}
+	  </script>
+	<div class="loginform" style="z-index:100">
+		  <div class="activity_title">现场活动大屏幕系统</div>
+		  <div>
+			<input id="password" class="password" placeholder="请输入活动的管理密码" type="password">
+		  </div>
+		  <div class="submitline">
+			<button class="button-login">开启</button>
+		  </div>
+    </div>
+    <div class="loader" style="display: block;">
+      <div class="icon"></div>
+    </div>
+    <div class="bigmpcodebar">
+      <div class="closebutton"></div>
+      <div class="label">{$wall_config['qrcodetoptext']}</div>
+	        <img src="{if $erweima==''}./defaultqrcode.php{else}{$erweima}{/if}" onerror="{if $erweima==''}./defaultqrcode.php{else}{$erweima}{/if}">
+	</div>
+	<div class="show_qrcode">
+      <div class="closebutton"></div>
+      <div class="label">{$wall_config['qrcodetoptext']}</div>
+      <img src="{if $erweima==''}./defaultqrcode.php{else}{$erweima}{/if}" onerror="{if $erweima==''}./defaultqrcode.php{else}{$erweima}{/if}">
+	</div>
+	 <div id="leafContainer"></div>   
+	<div id="effect"></div>
+	<div id="show_hide_nav"><img src="themes/meepo/assets/images/opened.png"></div>
+  </body>
+  <!--星星效果-->
+ 
+ <script>
+ {literal}
+ function bindhotkey(){
+	 $(document).bind("keyup","m",function(){$('#danmu_switch').trigger('click');});
+	 {/literal}
+			{foreach $plugs as $item}
+			{literal}
+			$(document).bind("keydown","{/literal}{$item['hotkey']}{literal}",function(){window.location.href="{/literal}{$item['url']}{literal}";});
+			{/literal}
+			{/foreach }
+		    {literal}
+}
+ 
+
+$(document).ready(function(){
+	$("#show_hide_nav img").on('click',function() {
+	if($("#panel_status").val()==0){
+		$(this).attr("src",'themes/meepo/assets/images/opened.png');
+		hidetb();
+		$("#panel_status").val("1");
+	}else{
+		showtb();
+		$("#panel_status").val("0");
+		$(this).attr("src",'themes/meepo/assets/images/chosed.png');
+
+	}
+	});
+	$("#bg_music").click(function(){
+			if ($(this).css("background-image").indexOf('no') != '-1') {
+                $("#audio").get(0).play();
+				$(this).css("background-image","url(MEEPOcommon/images/music.png)");
+			} else {
+				$("#audio").get(0).pause();
+				$(this).css("background-image","url(MEEPOcommon/images/no_music.png)");
+			}
+	});
+	$("#show_qd_code").click('click',function(){
+		$(".bigmpcodebar").slideUp()
+		$(".show_qrcode").slideDown();
+	});
+	$(".show_qrcode .closebutton").on("click", function() {
+			//$(".bigmpcodebar").slideUp()
+			$(".show_qrcode").slideUp()
+	});
+});
+function showtb() {
+    $(".Panel.Top").css({
+        top: "-" + $(".Panel.Top").height() + "px"
+    });
+    $(".Panel.Bottom").css({
+        bottom: "-" + $(".Panel.Bottom").height() + "px"
+    });
+}
+function hidetb() {
+    $(".Panel.Top").css({
+        top: 0
+    });
+    $(".Panel.Bottom").css({
+        bottom: 0
+    })
+};
+{/literal}
+</script>
+<input type="hidden" id="panel_status" value="1"/>
+<div style="display:none;">
+<script src="https://s22.cnzz.com/z_stat.php?id=1262636017&web_id=1262636017" language="JavaScript"></script>
+</div>
+</html>

@@ -1,0 +1,31 @@
+<style>
+{literal}
+.Panel.kaimu{
+	margin-top:110px;
+	margin-bottom:81px;
+    position: absolute;
+    width: 80%;
+    text-align: center;
+    padding-left: 10%;
+}
+{/literal}
+</style>
+<script src="themes/meepo/assets/js/base2.js?20154223" type="text/javascript" charset="utf-8"></script>
+<script src="themes/meepo/assets/js/screen_kaimu.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body class="FUN WALL" >
+{include file="themes/meepo/top_panel.html"}
+
+{if $kaimuconfig['fullscreen']==2}
+<style>
+	body{
+		background: url({$kaimuconfig['image']}) #000 no-repeat;
+	    background-size: 100% 100%;
+	}
+
+</style>
+{else}
+<div class="Panel kaimu" style="display: none; opacity: 1;">
+     <img src="{$kaimuconfig['image']}" style="width:auto;height:auto;max-width: 1200px;max-height:1000px;"/>
+</div>
+{/if}
